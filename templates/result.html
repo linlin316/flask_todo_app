@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="jp">
+    <head>
+        <meta charset="UTF-8">
+        <title>勤怠アプリ</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>勤怠アプリ</h1>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>日付</th>
+                    <th>出勤</th>
+                    <th>退勤</th>
+                    <th>作成日</th>
+                </tr>
+
+                {% for attendance_line in attendance_list %}
+                <tr>
+                    {% for attendance in attendance_line %}
+                    <td>{{ attendance }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table> 
+    </body>
+</html>

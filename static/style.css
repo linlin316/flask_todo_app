@@ -1,0 +1,89 @@
+/* 画面全体の見た目（背景・中央寄せ・フォント）を設定 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    text-align: center;
+    margin-top: 50px;
+    max-width: 500px;
+    margin: 50px auto;
+}
+
+
+/* 見出しの文字色を少しやわらかい黒にする */
+h1 {
+    color: #333;
+}
+
+
+/* フォーム同士の間に余白をつける */
+form {
+    margin: 20px 0;
+}
+
+
+/* 社員番号の入力欄を見やすくする */
+input[type="text"] {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+}
+
+
+/* ボタンの大きさ・色・角丸を設定する */
+button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+/* マウスを乗せたときにボタンの色を少し変える */
+button:hover {
+    background-color: #45a049;
+}
+
+
+/* メッセージ文字の色を少し薄くする */
+p {
+    color: #555;
+}
+
+
+
+/* 表全体の設定（幅・背景・線をきれいにする） */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+
+/* 見出しセルのデザイン */
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+}
+
+
+/* データセルの余白と線 */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+/* 偶数行を少しグレーにして見やすくする */
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+
+/* マウスを乗せた行を少し目立たせる */
+tr:hover {
+    background-color: #e6f2ff;
+}
+

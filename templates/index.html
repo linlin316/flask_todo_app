@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="jp">
+    <head>
+        <meta charset="UTF-8">
+        <title>勤怠一覧</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>勤怠一覧</h1>
+        <p>{{date_time}}</p>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        <form action="/clock" method="POST">
+            <label>社員番号：</label>
+            <input type="text" name="employee_id" required>
+            <button type="submit" name="attendance_status" value="出勤">出勤</button>
+            <button type="submit" name="attendance_status" value="退勤">退勤</button>
+        </form>
+        <form action="/data" method="get">
+            <button type="submit" name="attendance" value="勤怠一覧">勤怠一覧</button>
+        </form>
+    </body>
+</html>
