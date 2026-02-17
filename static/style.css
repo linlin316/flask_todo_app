@@ -71,7 +71,7 @@ th {
 
 /* データセルの余白と線 */
 td {
-    padding: 10px;
+    padding: 8px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -87,3 +87,101 @@ tr:hover {
     background-color: #e6f2ff;
 }
 
+
+/* 時計全体の配置*/
+.clock-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+
+/* 時計の丸い枠 */
+.clock {
+    width: 200px;
+    height: 200px;
+    border: 8px solid #333;
+    border-radius: 50%;
+    position: relative;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* 時計の針の共通スタイル */
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    background: #333;
+    border-radius: 10px;
+}
+
+/* 時針 */
+.hour-hand {
+    width: 6px;
+    height: 50px;
+    background: #333;
+}
+
+/* 分針 */
+.minute-hand {
+    width: 4px;
+    height: 70px;
+    background: #666;
+}
+
+/* 秒針 */
+.second-hand {
+    width: 2px;
+    height: 80px;
+    background: #e74c3c;
+}
+
+/* 中央の点 */
+.center-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #333;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+.marker {
+    position: absolute;
+    /* 数字自体の大きさを考慮して、中心に寄せる微調整 */
+    transform: translate(-50%, -50%); 
+}
+
+.marker-12 { top: 10%;  left: 50%; }
+.marker-3  { top: 50%;  left: 90%; }
+.marker-6  { top: 90%;  left: 50%; }
+.marker-9  { top: 50%;  left: 10%; }
+
+/*  日付とデジタル表示を縦に並べるための設定 */
+.clock-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    margin: 20px,0;
+}
+
+/*  日付表示（2026年02月17日...）の見た目 */
+.date-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;    
+}
+
+/*  デジタル表示（11:22）の見た目 */
+.digital-time {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #444;
+    margin-top: 15px;      
+    font-family: 'Courier New', Courier, monospace; 
+}

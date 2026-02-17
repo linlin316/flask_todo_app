@@ -41,6 +41,7 @@ attendance-app/
 │   ├── index.html  # 出勤・退勤画面
 │   └── result.html # 勤怠結果表示画面
 └── static/
+    ├── clock.js
     └── style.css   # CSSファイル
 ```
 

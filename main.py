@@ -23,12 +23,12 @@ def main(employee_id=None,attendance_status=None):
     if attendance_status == "出勤":
         db.clock_in(format_date,format_time,employee_id)
         message = "出勤しました。"
-        return format_date_time,message
+        return message
     
     elif attendance_status == "退勤":
         db.clock_out(format_time,employee_id,format_date)
         message = "退勤しました。"
-        return format_date_time,message
+        return message
     
     elif  employee_id is None and attendance_status is None:
         attendance_list = db.show_attendance_list()
