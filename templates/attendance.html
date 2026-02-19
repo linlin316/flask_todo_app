@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="jp">
+    <head>
+        <meta charset="UTF-8">
+        <title>勤怠一覧</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>勤怠一覧</h1>
+        <form action="\app" method="GET">
+            <button type="submit" name="app_name" value="勤怠アプリ">勤怠アプリ</button>
+            <button type="submit" name="app_name" value="ToDoアプリ">ToDoアプリ</button>           
+        </form>
+        <div class="clock-container">
+            <div id="date-display" class="date-display"></div>
+            <div class="clock">
+                <div class="marker marker-12">12</div>
+                <div class="marker marker-3">3</div>
+                <div class="marker marker-6">6</div>
+                <div class="marker marker-9">9</div>
+                <div class="hand hour-hand"></div>
+                <div class="hand minute-hand"></div>
+                <div class="hand second-hand"></div>
+                <div class="center-dot"></div>
+            </div>
+            <div id="digital-time" class="digital-time"></div>
+        </div>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        <form action="/clock" method="POST">
+            <label >
+                社員番号：
+                <input type="text" name="employee_id" required>
+            </label>
+            <button type="submit" name="attendance_status" value="出勤">出勤</button>
+            <button type="submit" name="attendance_status" value="退勤">退勤</button>
+        </form>
+        <form action="/data" method="GET">
+            <button type="submit" name="attendance_data" value="勤怠一覧">勤怠一覧</button>
+        </form>
+        <script src="{{ url_for('static', filename='clock.js') }}"></script>
+    </body>
+</html>

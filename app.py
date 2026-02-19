@@ -1,42 +1,57 @@
 from flask import Flask, request,render_template
-from datetime import datetime
 import main
 
 app = Flask(__name__)
 
+#URLを使ったときにトップページ
 @app.route("/")
-def index():
+def attendance():
 
     return render_template("index.html")
 
 
 
-# 選択した内容と社員番号を使ってデータベースにデータを追加・更新
+#トップページから選択したアプリのページを取得
+@app.route("/app",methods=["GET"])
+def index():
+    app_name = request.args.get("app_name")
+    
+    if app_name == "勤怠アプリ":
+        return render_template("attendance.html")
+    elif app_name == "ToDoアプリ":
+        return render_template("todo.html")
+    else:
+        return "アプリ見つかりません"
+
+
+
+# 勤怠アプリで選択した内容と社員番号を使ってデータベースにデータを追加・更新
 @app.route("/clock",methods=["POST"])
 def clock():
     employee_id = request.form.get("employee_id")
     attendance_status = request.form.get("attendance_status")
 
     if attendance_status is not None:
-        message = main.main(employee_id,attendance_status)
-        return render_template("index.html",message=message)
+        message = main.main(employee_id = employee_id, attendance_status = attendance_status)
+        return render_template("attendance.html",message=message)
     
     else:
-        return "未対応の地域です。", 404
+        return "勤怠データが追加・更新できません"
     
 
 
-# 選択した内容と社員番号を使ってデータベースにデータを追加・更新
+# 勤怠アプリで勤怠の内容を見るためにデータベースに入っているデータを取得
 @app.route("/data",methods=["GET"])
 def attendance_data_page():
-    attendance = request.args.get("attendance")
+    attendance_data = request.args.get("attendance_data")
+    employee_id = request.args.get("employee_id")
 
-    if attendance is not None:
-        attendance_list = main.main()
-        return render_template("result.html",attendance_list = attendance_list)
+    if attendance_data is not None:
+        attendance_list = main.main(attendance_data = attendance_data, employee_id = employee_id)
+        return render_template("attendance_result.html",attendance_list = attendance_list)
     
     else:
-        return "未対応の地域です。", 404
+        return "勤怠データが見つかりません。"
     
     
 

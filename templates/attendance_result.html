@@ -7,6 +7,13 @@
     </head>
     <body>
         <h1>勤怠アプリ</h1>
+            <form action="/data" method="GET">
+                <label>
+                    社員番号：
+                    <input type="text" name="employee_id" required>
+                </label>
+                <button type="submit" name="attendance_data" value="社員別">検索</button>
+            </form> 
             <table>
                 <tr>
                     <th></th>
@@ -24,6 +31,6 @@
                     {% endfor %}
                 </tr>
                 {% endfor %}
-            </table> 
+            </table>
     </body>
 </html>

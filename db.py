@@ -15,6 +15,7 @@ def clock_in(format_date,format_time,employee_id):
     conn.close()
 
 
+
 # 退勤のデータを追加してデータ更新
 def clock_out(format_time,employee_id,format_date):
     conn = sqlite3.connect("attendance.db")
@@ -28,6 +29,7 @@ def clock_out(format_time,employee_id,format_date):
 
     conn.commit()
     conn.close()
+
 
 
 #　勤怠のデータを取得
@@ -44,6 +46,7 @@ def show_attendance_list():
 
 
 
+#　社員別に勤怠のデータを取得
 def show_attendance_by_employee(employee_id):
     conn = sqlite3.connect("attendance.db")
     cursor = conn.cursor()
