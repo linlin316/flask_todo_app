@@ -13,7 +13,27 @@
                     <input type="text" name="employee_id" required>
                 </label>
                 <button type="submit" name="attendance_data" value="社員別">検索</button>
-            </form> 
+            </form>
+            {%  if employee_id is not none  %}
+                <h2>社員番号:No.{{ employee_id }}</h2>
+            {% endif %}
+            {%  if total_attendance is not none  %}
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>出勤数</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{{total_attendance}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            {% endif %}
             <table>
                 <tr>
                     <th></th>
@@ -21,6 +41,7 @@
                     <th>日付</th>
                     <th>出勤</th>
                     <th>退勤</th>
+                    <th>勤務時間</th>
                     <th>作成日</th>
                 </tr>
 

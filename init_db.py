@@ -13,6 +13,7 @@ def init_db():
         work_date TEXT NOT NULL,
         clock_in TEXT NOT NULL,
         clock_out TEXT,
+        working_hours TEXT,
         created_at TEXT NOT NULL        
     )                
     """)
