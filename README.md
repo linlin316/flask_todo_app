@@ -3,6 +3,8 @@
 シンプルな Todo 管理アプリです。  
 Flask + SQLite を使用し、タスク管理と作業日誌の記録ができます。
 
+本プロジェクトでは、Blueprint構成およびDBレイヤー分離を意識した設計を行っています。
+
 ---
 
 ## 主な機能
@@ -12,6 +14,7 @@ Flask + SQLite を使用し、タスク管理と作業日誌の記録ができ�
 - 期限管理（残り日数表示）
 - 作業日誌の記録・削除
 - Flask Blueprint 構成
+- レイヤー分離構成（routes / db / services）
 
 ---
 
@@ -25,18 +28,41 @@ Flask + SQLite を使用し、タスク管理と作業日誌の記録ができ�
 
 ---
 
+## アーキテクチャ概要
+
+- **routes**：HTTPリクエスト処理
+- **services**：表示用ロジック処理
+- **db**：データベース操作（SQL分離）
+- **templates**：UI表示
+- **static**：CSSなどの静的ファイル
+
 ## ディレクトリ構成
 
 ```text
 flask_app/
-├── app.py # Flaskアプリのエントリーポイント
-├── db.py # SQLite接続・DB初期化
-├── services.py # ビジネスロジック層
+├── app.py                # Flaskアプリのエントリーポイント
+├── services.py           # 表示用ロジック層（日時整形など）
+├── requirements.txt
+├── README.md
+│
+├── db/                   # データベース関連モジュール
+│   ├── __init__.py       # DBパッケージ定義
+│   ├── core.py           # SQLite接続管理 (get_conn)
+│   ├── init_db.py        # テーブル初期化処理
+│   ├── todos_db.py       # todosテーブル操作
+│   ├── journals_db.py    # todo_journalsテーブル操作
+│   └── todo.db           # SQLiteデータベースファイル
+│
 ├── routes/
-│ └── todos.py # Todo関連のBlueprintルート
-├── templates/ # Jinja2テンプレート
-├── static/ # CSS等の静的ファイル
-└── requirements.txt # 依存パッケージ
+│   ├── __init__.py
+│   └── todos.py          # Todo関連のBlueprintルート
+│
+├── templates/
+│   ├── index.html
+│   └── edit.html
+│
+└── static/
+    └── style.css
 
 ```
 ## 起動手順
