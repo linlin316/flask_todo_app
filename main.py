@@ -40,11 +40,12 @@ def main(attendance_data="未設定",employee_id=0,attendance_status="未設定"
         if  attendance_data == "勤怠一覧":
             attendance_list = db.show_attendance_list()
             total_attendance = None
-            return attendance_list,total_attendance
+            result_total_working_hours = None
+            return attendance_list,total_attendance,result_total_working_hours
         
         if  attendance_data == "社員別":
-            attendance_list,total_attendance = db.show_attendance_by_employee(employee_id)
-            return attendance_list,total_attendance
+            attendance_list, total_attendance, result_total_working_hours = db.show_attendance_by_employee(employee_id)
+            return attendance_list,total_attendance,result_total_working_hours
 
         else:
             return "勤怠データが見つかりません。"

@@ -17,19 +17,19 @@
             {%  if employee_id is not none  %}
                 <h2>社員番号:No.{{ employee_id }}</h2>
             {% endif %}
-            {%  if total_attendance is not none  %}
+            {%  if total_attendance is not none %}
                 <table>
                     <tr>
                         <th></th>
                         <th>出勤数</th>
-                        <th></th>
+                        <th>合計勤務時間</th>
                         <th></th>
                         <th></th>
                     </tr>
                     <tr>
                         <td></td>
                         <td>{{total_attendance}}</td>
-                        <td></td>
+                        <td>{{result_total_working_hours}}</td>
                         <td></td>
                     </tr>
                 </table>

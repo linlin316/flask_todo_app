@@ -17,6 +17,28 @@ def init_db():
         created_at TEXT NOT NULL        
     )                
     """)
+
+    cursor.execute("""
+        INSERT INTO attendance_list 
+        (employee_id, work_date, clock_in, clock_out, working_hours, created_at ) 
+        VALUES(?,?,?,?,?,?)
+        """,(1,"2026-02-21","11:50", "11:55", "00:05", "2026-02-21")
+    )
+
+    cursor.execute("""
+        INSERT INTO attendance_list 
+        (employee_id, work_date, clock_in, clock_out, working_hours, created_at ) 
+        VALUES(?,?,?,?,?,?)
+        """,(1,"2026-02-22","11:50", "11:55", "00:05", "2026-02-22")
+    )
+    
+    
+    cursor.execute("""
+        INSERT INTO attendance_list 
+        (employee_id, work_date, clock_in, clock_out, working_hours, created_at ) 
+        VALUES(?,?,?,?,?,?)
+        """,(1,"2026-02-23","11:50", "11:55", "00:05", "2026-02-23")
+    )
     
     conn.commit()
     conn.close()

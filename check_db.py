@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime
 
-def check_db(employee_id = 5,format_date="2026-02-19",clock_out="18:10"):
+def check_db(employee_id = 1):
     conn = sqlite3.connect("attendance.db")
     cursor = conn.cursor()
 
@@ -11,23 +11,32 @@ def check_db(employee_id = 5,format_date="2026-02-19",clock_out="18:10"):
     # print(attendance_list)
     conn = sqlite3.connect("attendance.db")
     cursor = conn.cursor()
-    cursor.execute("""
-            SELECT clock_in
-            FROM attendance_list
-            WHERE employee_id = ? AND work_date = ?
-            """,(employee_id,format_date)    
+    cursor.execute("SELECT working_hours FROM attendance_list WHERE employee_id =?",
+        (employee_id,)
     )
-    clock_in_list = cursor.fetchone()
-    clock_in = clock_in_list[0]
-    today = datetime.today().strftime("%Y-%m-%d")
-    clock_in_dataTime = f"{today} {clock_in}"
-    clock_in_time = datetime.strptime(clock_in,"%H:%M")
+    total_working_hours_list = cursor.fetchall()
 
-    clock_out_dataTime = f"{today} {clock_out}"
-    clock_out_time = datetime.strptime(clock_out,"%H:%M")
-    working_hours = clock_out_time - clock_in_time
 
-    # clock_in_data_time = datetime.strptime(clock_in_dataTime, "%Y-%m-%d %H:%M")
+    total_minutes = 0
+    # データベースから取得した勤務時間を1件ずつ取り取り出して合計勤務時間を表示する
+    for row in total_working_hours_list:
+
+        time_str = row[0]
+        hour_str,minute_str = time_str.split(":")
+        total_minutes += int(hour_str)*60 + int(minute_str)
+
+    # 画面表示するためにデータを整える「hh:mm」
+    hours = total_minutes // 60
+    minutes = total_minutes % 60
+    result_total_working_hours = f"{hours:02}:{minutes:02}"
+    print(result_total_working_hours)
+    
+
+     
+
+    
+    
+
     conn.close()
 
 

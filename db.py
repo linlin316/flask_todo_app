@@ -109,6 +109,28 @@ def show_attendance_by_employee(employee_id):
     total_attendance_list = cursor.fetchone()
     total_attendance = total_attendance_list[0]
 
+
+
+    # 社員別の合計勤務時間を表示するために社員別の出勤時間を取得
+    cursor.execute("SELECT working_hours FROM attendance_list WHERE employee_id =?",
+        (employee_id,)
+    )
+    total_working_hours_list = cursor.fetchall()
+
+
+    total_minutes = 0
+    # データベースから取得した勤務時間を1件ずつ取り取り出して合計勤務時間を表示する
+    for row in total_working_hours_list:
+
+        time_str = row[0]
+        hour_str,minute_str = time_str.split(":")
+        total_minutes += int(hour_str)*60 + int(minute_str)
+
+    # 画面表示するためにデータを整える「hh:mm」
+    hours = total_minutes // 60
+    minutes = total_minutes % 60
+    result_total_working_hours = f"{hours:02}:{minutes:02}"
+
     conn.close()
 
-    return attendance_list,total_attendance
+    return attendance_list,total_attendance,result_total_working_hours

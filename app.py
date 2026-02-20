@@ -47,8 +47,8 @@ def attendance_data_page():
     employee_id = request.args.get("employee_id")
 
     if attendance_data is not None:
-        attendance_list,total_attendance= main.main(attendance_data = attendance_data, employee_id = employee_id)
-        return render_template("attendance_result.html", attendance_list = attendance_list, employee_id = employee_id, total_attendance=total_attendance)
+        attendance_list,total_attendance,result_total_working_hours= main.main(attendance_data = attendance_data, employee_id = employee_id)
+        return render_template("attendance_result.html", attendance_list = attendance_list, employee_id = employee_id, total_attendance=total_attendance, result_total_working_hours=result_total_working_hours)
     
     else:
         return "勤怠データが見つかりません。"
