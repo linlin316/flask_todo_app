@@ -11,8 +11,49 @@ def get_conn():
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
+
+# ホームページ
+# 未完了のタスクを優先
+# 期限が近いタスクを優先
+def fetch_todos_sorted():
+    # DB接続
+    with get_conn() as conn:
+        return conn.execute("""
+            SELECT id, title, created_at, due_date, is_done
+            FROM todos
+            ORDER BY
+              is_done ASC,
+              CASE WHEN due_date IS NULL THEN 1 ELSE 0 END,
+              due_date ASC,
+              id DESC
+        """).fetchall()
+
+
+# タスク編集
+def fetch_todo_with_journals(todo_id: int):
+    # DB接続
+    with get_conn() as conn:
+        # 対象のTodoを取得
+        todo = conn.execute(
+            "SELECT id, title, due_date FROM todos WHERE id = ?",
+            (todo_id,)
+        ).fetchone()
+
+        # 作業日誌を新しい順で取得
+        journals = conn.execute("""
+            SELECT id, content, created_at
+            FROM todo_journals
+            WHERE todo_id = ?
+            ORDER BY id DESC
+        """, (todo_id,)
+        ).fetchall()
+    
+    return todo, journals
+
+
 # todos テーブルが無ければ作る
 def init_db():
+    # DB接続
     with get_conn() as conn:
         # タスク本体
         conn.execute("""
@@ -36,6 +77,7 @@ def init_db():
             )
         """)
 
+        # todosテーブルの現在のカラム一覧を取得
         cols = [row["name"] for row in conn.execute(
             "PRAGMA table_info(todos)"
         ).fetchall()]
