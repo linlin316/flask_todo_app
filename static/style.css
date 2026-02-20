@@ -1,0 +1,223 @@
+* { box-sizing: border-box; }
+body{
+  background:#f6f7fb;
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+}
+
+.container{
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 0 14px;
+}
+
+.card{
+  background:#fff;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+h1{
+  margin: 0 0 18px 0;
+  font-size: 44px;
+}
+
+.add-form{
+  display:flex;
+  gap: 14px;
+  align-items:center;
+  margin-bottom: 18px;
+}
+
+.input{
+  height: 46px;
+  border: 1px solid #d9dce3;
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 16px;
+}
+
+.add-form input[type="text"]{
+  flex: 1;
+  min-width: 260px;
+}
+
+.add-form input[type="date"]{
+  width: 260px;
+}
+
+.todo-list{
+  display:flex;
+  flex-direction:column;
+  gap: 16px;
+}
+
+.todo-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #eef0f4;
+  border-radius: 16px;
+}
+
+.todo-title{
+  font-size: 26px;
+  font-weight: 800;
+  white-space: nowrap;;
+}
+
+.todo-right{
+  display:flex;
+  align-items:center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.todo-meta{
+  min-width: 260px;
+  text-align:left;
+  font-size: 14px;
+  color:#444;
+  line-height: 1.7;
+}
+
+.todo-main{
+  flex:1;
+  min-width:0;
+}
+
+.actions{
+  display:flex;
+  gap: 12px;
+  align-items:center;
+}
+
+.due-row{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  display:inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.badge-warn{
+  background:#f59e0b;
+  color:#111827;
+}
+
+.badge-danger{
+  background:#ef4444;
+  color:#fff;
+}
+
+.btn{
+  border:none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.btn-add{ background:#2563eb; color:#fff; }
+.btn-edit{ background:#38bdf8; color:#0b1220; }
+.btn-del{ background:#ef4444; color:#fff; }
+.btn-done{ background:#22c55e; color:#fff;}
+.btn-done-off{ background:#9ca3af; color:#fff;}
+.btn-link{ background: #5b21b6; color: #fff;}
+
+.actions form{
+  margin:0;
+}
+
+.done{
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.done-item{
+  opacity: 0.75;
+}
+
+.edit-form{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  flex-wrap: nowrap;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field label{
+  font-size:14px;
+  color:#666;
+  font-weight:600;
+}
+
+.field-grow{
+  flex:1;
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.journal-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 12px;
+  background:#f3f4f6;
+  border-radius:12px;
+  padding:12px 14px;
+}
+
+.journal-time{
+  font-size:12px;
+  color:#666;
+  margin-bottom:6px;
+}
+
+.journal-text{
+  font-size:14px;
+  white-space:pre-wrap;
+}
+
+.journal-left{
+  flex:1;
+}
+
+.journal-del{
+  margin:0;
+}
+
+.btn-del-mini{
+  border:none;
+  border-radius:10px;
+  padding: 8px 12px;
+  font-weight:700;
+  cursor:pointer;
+  background:#ef4444;
+  color:#fff;
+  font-size: 12px;
+}
