@@ -10,8 +10,10 @@ from db.todos_db import (
 from db.journals_db import create_todo_journal, delete_todo_journal_and_get_todo_id
 
 
+# Todo機能用のBlueprint
 todo_bp = Blueprint("todo", __name__)
 
+# 日本時間（表示用）
 JST = timezone(timedelta(hours=9))
 
 # ホームページ
@@ -50,7 +52,7 @@ def add():
     title = (request.form.get("title") or "").strip()  #.strip()文字列の前後の空白を削除
     due_date = (request.form.get("due_date") or "").strip()
 
-    # タイトルと期限が未入力の場合は登録しない
+    # タイトルまたは期限が未入力の場合は登録しない
     if title and due_date:
         insert_todo(title, due_date)
 
@@ -76,7 +78,7 @@ def toggle(todo_id):
 
 
 # タスク編集
-@todo_bp.route("/edit/<int:todo_id>", methods=["GET", "POST"])
+@todo_bp.route("/edit/<int:todo_id>", methods=["GET", "POST"]) # POST: 更新処理 , GET: 編集画面表示
 def edit(todo_id):
     if request.method == "POST":
         # 編集対象をもらう

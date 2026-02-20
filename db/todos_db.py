@@ -1,10 +1,11 @@
 from .core import get_conn
 
+
 # ホームページ
-# 未完了のタスクを優先
-# 期限が近いタスクを優先
 def fetch_todos_sorted():
-    # DB接続
+    # 未完了のタスクを優先
+    # 期限が近い順
+    # 同日の場合はID降順
     with get_conn() as conn:
         return conn.execute("""
             SELECT id, title, created_at, due_date, is_done
@@ -20,7 +21,6 @@ def fetch_todos_sorted():
 
 # タスク編集
 def fetch_todo_with_journals(todo_id: int):
-    # DB接続
     with get_conn() as conn:
         # 対象のTodoを取得
         todo = conn.execute(
@@ -48,9 +48,11 @@ def delete_todo_with_journals(todo_id: int):
         conn.execute("DELETE FROM todos WHERE id = ?", (todo_id,))
 
 
+
 # タスク完了
 def toggle_todo_done(todo_id: int):
     with get_conn() as conn:
+        # 対象のTodoを取得し、完了したタスクが下に移動
         conn.execute("""
             UPDATE todos SET is_done = 
             CASE is_done WHEN 1 THEN 0 ELSE 1 END
@@ -58,7 +60,8 @@ def toggle_todo_done(todo_id: int):
         """, (todo_id,))
 
 
-#Todo削除
+
+# 記録削除
 def insert_todo(title: str, due_date: str | None):
     with get_conn() as conn:
         conn.execute(
@@ -66,7 +69,7 @@ def insert_todo(title: str, due_date: str | None):
             (title, due_date or None))
 
 
- # タスク編集
+# タスク編集
 def update_todo(todo_id: int, title: str | None, due_date: str | None) -> None:
     with get_conn() as conn:
         conn.execute("""

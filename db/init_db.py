@@ -1,6 +1,6 @@
 from .core import get_conn
 
-# todos テーブルが無ければ作る
+# アプリ起動時に必要なテーブルを自動作成
 def init_db():
     # DB接続
     with get_conn() as conn:
@@ -26,7 +26,7 @@ def init_db():
             )
         """)
 
-        # todosテーブルの現在のカラム一覧を取得
+        # todosテーブルの現タスク一覧を取得
         cols = [row["name"] for row in conn.execute(
             "PRAGMA table_info(todos)"
         ).fetchall()]

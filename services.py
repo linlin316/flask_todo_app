@@ -10,15 +10,19 @@ def pretty_created_at(created_at_str: str, today_date):
       02/19 15:04
     """
     try:
-        dt = datetime.strptime(created_at_str, "%Y-%m-%d %H:%M:%S")
-        d = dt.date()
+        created_dt = datetime.strptime(created_at_str, "%Y-%m-%d %H:%M:%S")
+        created_date = created_dt.date()
 
-        if d == today_date:
-            return f"今日 {dt.strftime('%H:%M')}"
-        if (today_date - d).days == 1:
-            return f"昨日 {dt.strftime('%H:%M')}"
-        if d.year == today_date.year:
-            return dt.strftime("%m/%d %H:%M")
-        return dt.strftime("%Y/%m/%d %H:%M")
+        if created_date == today_date:
+            return f"今日 {created_dt.strftime('%H:%M')}"
+        
+        if (today_date - created_date).days == 1:
+            return f"昨日 {created_dt.strftime('%H:%M')}"
+        
+        if created_date.year == today_date.year:
+            return created_dt.strftime("%m/%d %H:%M")
+        
+        return created_dt.strftime("%Y/%m/%d %H:%M")
+    
     except Exception:
         return created_at_str  # 壊れてたら元のまま

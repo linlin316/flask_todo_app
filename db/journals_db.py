@@ -11,6 +11,7 @@ def create_todo_journal(todo_id: int, content: str) -> None:
 
 
 # 記録削除
+# 削除後のリダイレクト先取得のため、先に todo_id を取得
 def delete_todo_journal_and_get_todo_id(journal_id: int) -> int | None:
     with get_conn() as conn:
         row = conn.execute(
