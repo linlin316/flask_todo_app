@@ -1,4 +1,4 @@
-from flask import Flask, request,render_template
+from flask import Flask, request,render_template, redirect
 import main
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def index():
     if app_name == "勤怠アプリ":
         return render_template("attendance.html")
     elif app_name == "ToDoアプリ":
-        return render_template("todo.html")
+        return redirect("http://127.0.0.1:5001/")
     else:
         return "アプリ見つかりません"
 
