@@ -1,0 +1,276 @@
+
+/*========================
+・基本リセット
+・box-sizing統一
+・ページ背景とフォント設定
+========================= */
+   * { box-sizing: border-box; }
+body{
+  background:#f6f7fb;
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+}
+
+
+/* レイアウト：外枠コンテナ */
+.container{
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 0 14px;
+}
+
+
+/* カードUI（メイン表示枠）*/
+.card{
+  background:#fff;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+
+/* ページタイトル */
+h1{
+  margin: 0 0 18px 0;
+  font-size: 44px;
+}
+
+
+/* Todo追加フォーム */
+.add-form{
+  display:flex;
+  gap: 14px;
+  align-items:center;
+  margin-bottom: 18px;
+}
+
+
+/* 入力欄共通スタイル */
+.input{
+  height: 46px;
+  border: 1px solid #d9dce3;
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 16px;
+}
+
+.add-form input[type="text"]{
+  flex: 1;
+  min-width: 260px;
+}
+
+.add-form input[type="date"]{
+  width: 260px;
+}
+
+
+/* Todoリスト全体 */
+.todo-list{
+  display:flex;
+  flex-direction:column;
+  gap: 16px;
+}
+
+
+/* 各Todoカード */
+.todo-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #eef0f4;
+  border-radius: 16px;
+}
+
+
+/* Todoタイトル表示 */
+.todo-title{
+  font-size: 26px;
+  font-weight: 800;
+  white-space: nowrap;;
+}
+
+
+/* 右側メタ情報＋操作エリア */
+.todo-right{
+  display:flex;
+  align-items:center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+
+/* 作成日・期限などのメタ情報 */
+.todo-meta{
+  min-width: 260px;
+  text-align:left;
+  font-size: 14px;
+  color:#444;
+  line-height: 1.7;
+}
+
+.todo-main{
+  flex:1;
+  min-width:0;
+}
+
+
+.actions{
+  display:flex;
+  gap: 12px;
+  align-items:center;
+}
+
+.actions form{
+  margin:0;
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+
+.due-row{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+
+/* 期限切れなど表示用 */
+.badge{
+  display:inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.badge-warn{
+  background:#f59e0b;
+  color:#111827;
+}
+
+.badge-danger{
+  background:#ef4444;
+  color:#fff;
+}
+
+
+/* ボタン共通スタイル */
+.btn{
+  border:none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+
+/* ボタンカラー */
+.btn-add{ background:#2563eb; color:#fff; }
+.btn-edit{ background:#38bdf8; color:#0b1220; }
+.btn-del{ background:#ef4444; color:#fff; }
+.btn-done{ background:#22c55e; color:#fff;}
+.btn-done-off{ background:#9ca3af; color:#fff;}
+
+
+/* 記録削除用ボタン */
+.btn-del-mini{
+  border:none;
+  border-radius:10px;
+  padding: 8px 12px;
+  font-weight:700;
+  cursor:pointer;
+  background:#ef4444;
+  color:#fff;
+  font-size: 12px;
+}
+
+
+/* 完了状態の表示 */
+.done{
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+
+/* 完了カードの視覚調整 */
+.done-item{
+  opacity: 0.75;
+}
+
+
+/* 編集フォーム */
+.edit-form{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  flex-wrap: nowrap;
+}
+
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field label{
+  font-size:14px;
+  color:#666;
+  font-weight:600;
+}
+
+.field-grow{
+  flex:1;
+}
+
+
+.journal-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 12px;
+  background:#f3f4f6;
+  border-radius:12px;
+  padding:12px 14px;
+}
+
+
+/* 日誌リスト */
+.journal-list {
+  margin-top: 12px;
+}
+
+
+/* 日誌時間 */
+.journal-time{
+  font-size:12px;
+  color:#666;
+  margin-bottom:6px;
+}
+
+
+/* 日誌本文 */
+.journal-text{
+  font-size:14px;
+  white-space:pre-wrap;
+}
+
+.journal-left{
+  flex:1;
+}
+
+.journal-del{
+  margin:0;
+}

@@ -1,0 +1,136 @@
+from flask import Blueprint, render_template, request, redirect, url_for
+from datetime import datetime, timedelta, timezone
+from ..services import pretty_created_at
+
+from ..db.todos_db import (
+    fetch_todos_sorted, fetch_todo_with_journals,
+    delete_todo_with_journals, toggle_todo_done,
+    insert_todo, update_todo
+)
+from ..db.journals_db import create_todo_journal, delete_todo_journal_and_get_todo_id
+import os
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # .../apps/todo_appdir
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
+
+# Todo機能用のBlueprint
+todo_bp = Blueprint(
+    "todo",
+    __name__,
+    template_folder=TEMPLATES_DIR,
+    static_folder=STATIC_DIR,
+    url_prefix="/todo",
+)
+
+# 日本時間（表示用）
+JST = timezone(timedelta(hours=9))
+
+# ホームページ
+@todo_bp.route("/")   #http://127.0.0.1:5000/の意味
+def home():
+    rows = fetch_todos_sorted()
+
+    # 現在の時間を文字列と数字になる(日本時間)
+    today_date = datetime.now(JST).date()
+    today_str  = today_date.isoformat()
+
+    # 表示用のTodoリストを作成
+    todos = []
+    for r in rows:
+        d = dict(r)
+        d["created_at_pretty"] = pretty_created_at(d["created_at"], today_date)
+        d["days_left"] = None # 残り日数の初期値（期限なしの場合はNoneのまま）
+
+        # 期限が設定されている場合のみ残り日数を計算
+        if d.get("due_date"):
+            try:
+                due = datetime.strptime(d["due_date"], "%Y-%m-%d").date()
+                d["days_left"] = (due - today_date).days
+            except ValueError:
+                d["days_left"] = None  # 形式がおかしい場合は表示しない
+
+        todos.append(d)
+
+    return render_template("todo_index.html", todos=todos, today=today_str)
+
+
+
+# 追加タスク
+@todo_bp.route("/add", methods=["POST"])
+def add():
+    title = (request.form.get("title") or "").strip()  #.strip()文字列の前後の空白を削除
+    due_date = (request.form.get("due_date") or "").strip()
+
+    # タイトルまたは期限が未入力の場合は登録しない
+    if title and due_date:
+        insert_todo(title, due_date)
+
+    return redirect(url_for("todo.home"))
+
+
+
+# タスク削除
+@todo_bp.route("/delete/<int:todo_id>", methods=["POST"])
+def delete(todo_id):
+    delete_todo_with_journals(todo_id)
+    return redirect(url_for("todo.home"))
+
+
+
+# タスク完了
+@todo_bp.route("/toggle/<int:todo_id>", methods=["POST"])
+def toggle(todo_id):
+    toggle_todo_done(todo_id)
+    return redirect(url_for("todo.home"))
+
+
+
+
+# タスク編集
+@todo_bp.route("/edit/<int:todo_id>", methods=["GET", "POST"]) # POST: 更新処理 , GET: 編集画面表示
+def edit(todo_id):
+    if request.method == "POST":
+        # 編集対象をもらう
+        title = (request.form.get("title") or "").strip()
+        due_date = (request.form.get("due_date") or "").strip()
+
+        # 編集ページで未変更の場合は登録しない
+        if title:
+            update_todo(todo_id, title or None, due_date or None)
+
+        return redirect(url_for("todo.home"))
+    # GET時dbからもらう
+    todo, journals = fetch_todo_with_journals(todo_id)
+
+    today_str = datetime.now(JST).date().isoformat()
+
+    if todo is None:
+        return "Not Found", 404
+
+    return render_template("edit.html", todo=todo, journals=journals, today=today_str)
+
+
+
+# 記録追加
+@todo_bp.route("/journal/add/<int:todo_id>", methods=["POST"])
+def add_journal(todo_id):
+    content = (request.form.get("content") or "").strip()
+
+    # 記録未入力の場合は登録しない
+    if content:
+        create_todo_journal(todo_id, content)
+
+    return redirect(url_for("todo.edit", todo_id=todo_id))
+
+    
+
+# 記録削除
+@todo_bp.route("/journal/delete/<int:journal_id>", methods=["POST"])
+def delete_journal(journal_id):
+    todo_id = delete_todo_journal_and_get_todo_id(journal_id)
+    if todo_id is None:
+        return "Not Found", 404
+    return redirect(url_for("todo.edit", todo_id=todo_id))

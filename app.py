@@ -1,7 +1,9 @@
 from flask import Flask, request,render_template, redirect
+from apps.todo_appdir.routes.todos import todo_bp
 import main
 
 app = Flask(__name__)
+app.register_blueprint(todo_bp)
 
 # URLを使ったときにトップページ
 @app.route("/")
@@ -19,7 +21,7 @@ def index():
     if app_name == "勤怠アプリ":
         return render_template("attendance.html")
     elif app_name == "ToDoアプリ":
-        return redirect("http://127.0.0.1:5001/")
+        return redirect("/todo/")
     else:
         return "アプリ見つかりません"
 

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Todoリスト</title>
+  <link rel="stylesheet" href="{{ url_for('todo.static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <a href="/" class="btn btn-add">トップへ</a>
+      <a href="/app?app_name=勤怠アプリ" class="btn btn-add">勤怠へ</a>
+      <h1>Todoリスト</h1>
+
+      <form class="add-form" action="{{ url_for('todo.add') }}" method="post">
+        <input class="input" type="text" name="title" placeholder="Todoを追加">
+        <input class="input" type="date" name="due_date" min="{{ today }}">
+        <button class="btn btn-add" type="submit">追加</button>
+      </form>
+
+      <div class="todo-list">
+  {% for t in todos %}
+    <div class="todo-item {% if t['is_done'] %}done-item{% endif %}">
+      <div class="todo-main">
+        <div class="todo-title {% if t['is_done'] %}done{% endif %}">
+          {{ t["title"] }}
+        </div>
+      </div>
+
+      <div class="todo-right">
+        <div class="todo-meta">
+          <div>作成: {{ t["created_at_pretty"] }}</div>
+
+          {% if t["due_date"] %}
+            <div class="due-row">
+              <span>期限: {{ t["due_date"] }}</span>
+
+              {% if not t["is_done"] and t["days_left"] is not none %}
+                {% if t["days_left"] < 0 %}
+                  <span class="badge badge-danger">期限切れ</span>
+                {% elif t["days_left"] == 0 %}
+                  <span class="badge badge-danger">今日まで</span>
+                {% elif t["days_left"] <= 7 %}
+                  <span class="badge badge-warn">あと{{ t["days_left"] }}日</span>
+                {% endif %}
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="actions">
+          <form action="{{ url_for('todo.toggle', todo_id=t['id']) }}" method="post">
+            <button class="btn btn-done {% if t['is_done'] %}btn-done-off{% endif %}" type="submit">
+              {% if t["is_done"] %}戻る{% else %}完了{% endif %}
+            </button>
+          </form>
+
+          <a class="btn btn-edit" href="{{ url_for('todo.edit', todo_id=t['id']) }}">編集</a>
+
+          <form action="{{ url_for('todo.delete', todo_id=t['id']) }}" method="post">
+            <button class="btn btn-del" type="submit">削除</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+    </div>
+  </div>
+</body>
+</html>
